@@ -10,12 +10,12 @@
  */
 int main(void)
 {
-	char *line;
 	char *argv[2];
 	size_t n;
 	ssize_t nread;
 	int status;
 	pid_t child_pid;
+	char *line;
 
 	while (1)
 	{
