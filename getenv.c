@@ -4,27 +4,6 @@
 #include "main.h"
 
 /**
- * strcmp - compares two strings
- * @s1: the first string
- * @s2: the second string
- *
- * Return: 0 if the strings are the same,
- * another integer if they are not equal
- */
-int _strcmp(const char *s1, const char *s2)
-{
-	char c1, c2;
-	int i = 0;
-
-	do {
-		c1 = (char) s1[i];
-		c2 = (char) s2[i++];
-		if (c1 == '\0')
-			break;
-	} while (c1 == c2);
-	return (c1 - c2);
-}
-/**
  * getenv - gets an environment variable
  * @name: name of environment variable
  *
@@ -50,7 +29,7 @@ char *_getenv(const char *name)
 		token = strtok_r(str, delim, &saveptr);
 		if (_strcmp(token, name) == 0)
 		{
-			envv = strtok_r(NULL, delim, &saveptr);
+			envv = strtok_r(NULL, "", &saveptr);
 			break;
 		}
 	}
@@ -75,7 +54,7 @@ int main(int ac, char **av)
 	i = 1;
 	while (av[i])
 	{
-		envv = getenv(av[i]);
+		envv = _getenv(av[i]);
 		printf("%s=%s\n", av[i], envv);
 		i++;
 	}
