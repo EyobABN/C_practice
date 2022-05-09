@@ -21,14 +21,12 @@ int main()
 			str[j] = environ[i][j];
 		token = strtok_r(str, "=", &saveptr);
 		if (_strcmp(token, "PATH") == 0)
-		{
 			while ((dir = strtok_r(NULL, ":", &saveptr)))
 			{
 				for (j = 0; dir[j] != '\0'; j++)
 					_putchar(dir[j]);
 				_putchar('\n');
 			}	
-		}
 	}
 	return (0);
 }
