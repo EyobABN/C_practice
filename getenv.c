@@ -35,13 +35,18 @@ char *_getenv(const char *name)
 	const char *delim = "=";
 	char *envv = NULL;
 	char *token, *saveptr;
-	int i;
+	int i, j;
+	char str[2047];
 
 	if (name == NULL)
 		return (NULL);
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		token = strtok_r(environ[i], delim, &saveptr);
+		for (j = 0; j < 2047; j++)
+			str[j] = '\0';
+		for (j = 0; environ[i][j] != '\0'; j++)
+			str[j] = environ[i][j];
+		token = strtok_r(str, delim, &saveptr);
 		if (_strcmp(token, name) == 0)
 		{
 			envv = strtok_r(NULL, delim, &saveptr);
