@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "main.h"
 
 /**
  * strcmp - compares two strings
@@ -36,13 +37,13 @@ char *_getenv(const char *name)
 	char *envv = NULL;
 	char *token, *saveptr;
 	int i, j;
-	char str[2047];
+	char str[10240];
 
 	if (name == NULL)
 		return (NULL);
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		for (j = 0; j < 2047; j++)
+		for (j = 0; j < 10240; j++)
 			str[j] = '\0';
 		for (j = 0; environ[i][j] != '\0'; j++)
 			str[j] = environ[i][j];
@@ -74,7 +75,7 @@ int main(int ac, char **av)
 	i = 1;
 	while (av[i])
 	{
-		envv = _getenv(av[i]);
+		envv = getenv(av[i]);
 		printf("%s=%s\n", av[i], envv);
 		i++;
 	}
