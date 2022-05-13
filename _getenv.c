@@ -14,7 +14,7 @@ char *_getenv(const char *name)
 	extern char **environ;
 	const char *delim = "=";
 	char *envv = NULL;
-	char *token, *saveptr;
+	char *token;
 	int i, j;
 	char str[10240];
 
@@ -26,10 +26,10 @@ char *_getenv(const char *name)
 			str[j] = '\0';
 		for (j = 0; environ[i][j] != '\0'; j++)
 			str[j] = environ[i][j];
-		token = strtok_r(str, delim, &saveptr);
+		token = strtok(str, delim);
 		if (_strcmp(token, name) == 0)
 		{
-			envv = strtok_r(NULL, "", &saveptr);
+			envv = strtok(NULL, "");
 			break;
 		}
 	}
