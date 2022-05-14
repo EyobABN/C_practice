@@ -28,10 +28,17 @@ int _strcmp(const char *s1, const char *s2);
 char *_strdup(const char *str);
 void _puts(char *str);
 int _strlen(const char *s);
+
 path_t *add_node_end(path_t **head, char *str);
 void free_list(path_t *head);
+
+void *free_array(char **arr, int j);
+
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
-char **makeCmd(char *str);
+
+int isOpr(char *s);
+char **mkargv(char *str);
+char **makeCmds(char *str);
 
 #endif /* MAIN_H */

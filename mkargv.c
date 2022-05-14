@@ -26,32 +26,13 @@ int count_words(char *str)
 }
 
 /**
- * free_array - frees an array of strings
- * @arr: the array
- * @j: free all elements upto and includeing j
- *
- * Return: a void pointer
- */
-void *free_array(char **arr, int j)
-{
-	int i;
-
-	for (i = 0; i < j; i++)
-	{
-		free(arr[i]);
-	}
-	free(arr);
-	return (NULL);
-}
-
-/**
- * makeCmd - splits a string into words
+ * mkargv - splits a string into words
  * @str: the string
  *
  * Return: an array of the words
  */
 
-char **makeCmd(char *str)
+char **mkargv(char *str)
 {
 	char **cmd;
 	int i, j, k = 0, l, m, word_count, letter_count;
