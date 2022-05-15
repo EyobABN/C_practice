@@ -11,7 +11,7 @@
  */
 void exec(char **cmds, int i, int *last_return)
 {
-	char **argv;
+	char **argv, *temp;
 
 	argv = mkargv(cmds[i]);
 	if (argv == NULL)
@@ -28,17 +28,20 @@ void exec(char **cmds, int i, int *last_return)
 		free_entire_arr(argv);
 		return;
 	}
-	if (*last_return != 0)
-	{
-		*last_return = 0;
-		return;
-	}
 	if (_strcmp(argv[0], "exit") == 0)
 	{
 		free_entire_arr(argv);
 		free_entire_arr(cmds);
 		exit (97);
 	}
+	if (*last_return != 0)
+	{
+		*last_return = 0;
+		return;
+	}
+	temp = argv[0];
+	argv[0] = fetch_cmd(argv[0]);
+	free(temp);
 	if (execve(argv[0], argv, NULL) == -1)
 		perror("Execve Error:");
 	free_entire_arr(argv);

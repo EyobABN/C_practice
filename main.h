@@ -45,7 +45,7 @@ void free_entire_arr(char **arr);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 
-char *cmd_exists(char *cmd);
+char *fetch_cmd(char *cmd);
 int isOpr(char *s);
 char **mkargv(char *str);
 char **makeCmds(char *str);

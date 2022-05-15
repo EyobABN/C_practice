@@ -7,10 +7,10 @@
  */
 int main(void)
 {
-	char **cmds, *line;
+	char **cmds, *line, *cmd, *full_cmd;
 	size_t n;
 	ssize_t nread;
-	int status, i, last_return = 0;
+	int status, i, currIndex = 0, last_return = 0;
 	pid_t child_pid;
 
 	while (1)
@@ -27,6 +27,16 @@ int main(void)
 		for (i = 0; cmds[i]; i++)
 		{
 			/* Check if command exists */
+			cmd = _strtok(cmds[i], " ", &currIndex);
+			currIndex = 0;
+			if (isOpr(cmd) == 0)
+				full_cmd = fetch_cmd(cmd);
+			free(cmd);
+			if (full_cmd == NULL)
+			{
+				perror("Error: Command not found");
+				continue;
+			}
 			child_pid = fork();
 			if (child_pid == -1)
 				return (print_error());

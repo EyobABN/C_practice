@@ -1,19 +1,22 @@
 #include "main.h"
 
 /**
- * cmd_exists - check if a command exists
+ * fetch_cmd - check if a command exists
  * @cmd: the command
  *
  * Return: a pointer to the full path of the command,
  * or NULL command not found
  */
-char *cmd_exists(char *cmd)
+char *fetch_cmd(char *cmd)
 {
 	path_t *head, *p;
-	char *temp;
+	char *temp, *builtins[3] = {"exit", "env", NULL};
 	struct stat st;
 	int i, j, n;
 
+	for(i = 0; builtins[i]; i++)
+		if (_strcmp(cmd, builtins[i]) == 0)
+			return (cmd);
 	if (stat(cmd, &st) == 0) /* check if absolute path */
 		return (cmd);
 	head = NULL;
@@ -44,15 +47,15 @@ char *cmd_exists(char *cmd)
 	return (NULL);
 }
 
-int main()
+/*int main()
 {
 	char *cmd;
 
-	cmd = cmd_exists("false");
+	cmd = fetch_cmd("false");
 	if (cmd != NULL)
 	{
 		printf("It works! Full path: [[%s]]\n", cmd);
 		free(cmd);
 	}
 	return (0);
-}
+}*/

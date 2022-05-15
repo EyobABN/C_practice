@@ -23,7 +23,7 @@ void link_path_dirs(path_t **head)
 		str[j] = '\0';
 		token = _strtok(str, "=", &currIndex);
 		if (_strcmp(token, "PATH") == 0)
-			while (dir = _strtok(str, ":", &currIndex))
+			while ((dir = _strtok(str, ":", &currIndex)))
 			{
 				add_node_end(head, dir);
 				free(dir);
