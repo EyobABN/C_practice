@@ -25,6 +25,8 @@ void exec(char **cmds, int i, int *last_return)
 			else
 				*last_return = 1;
 		}
+		if (_strcmp(argv[0], ";") == 0)
+			*last_return = 0;
 		free_entire_arr(argv);
 		return;
 	}
