@@ -10,9 +10,6 @@ void _puts(char *str)
 {
 	if (str == NULL || *str == '\0')
 		return;
-	else
-	{
-		_putchar(*str);
-		_puts(str + 1);
-	}
+	_putchar(*str);
+	_puts(str + 1);
 }

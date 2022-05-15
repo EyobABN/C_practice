@@ -32,7 +32,7 @@ void exec(char **cmds, int i, int *last_return)
 	{
 		free_entire_arr(argv);
 		free_entire_arr(cmds);
-		exit (97);
+		exit(97);
 	}
 	if (*last_return != 0)
 	{

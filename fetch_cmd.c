@@ -14,7 +14,7 @@ char *fetch_cmd(char *cmd)
 	struct stat st;
 	int i, j, n;
 
-	for(i = 0; builtins[i]; i++)
+	for (i = 0; builtins[i]; i++)
 		if (_strcmp(cmd, builtins[i]) == 0)
 			return (cmd);
 	if (stat(cmd, &st) == 0) /* check if absolute path */
