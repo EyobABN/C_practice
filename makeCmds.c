@@ -1,5 +1,4 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
  * isOpr - checks if part of a string matches
@@ -138,7 +137,7 @@ char **makeCmds(char *str)
  *
  * Return: 0 upon success, 1 upon failure
  */
-int main(void)
+/*int main(void)
 {
 	int i, j, cc, ac;
 	char **cv, **av;
@@ -165,4 +164,4 @@ int main(void)
 	}
 	free_array(cv, cc);
 	return (0);
-}
+}*/

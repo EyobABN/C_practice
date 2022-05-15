@@ -8,6 +8,9 @@
 
 extern char **environ;
 
+#include <stdio.h>
+#include <sys/wait.h>
+
 /**
  * struct path_s - a struct of a directory in path
  * @dir: the directory
@@ -33,6 +36,7 @@ path_t *add_node_end(path_t **head, char *str);
 void free_list(path_t *head);
 
 void *free_array(char **arr, int j);
+void free_entire_arr(char **arr);
 
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
@@ -40,5 +44,9 @@ int _unsetenv(const char *name);
 int isOpr(char *s);
 char **mkargv(char *str);
 char **makeCmds(char *str);
+
+void exec(char **cmds, int i);
+void parent(int *status, char **cmds);
+int print_error(void);
 
 #endif /* MAIN_H */

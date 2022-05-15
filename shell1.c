@@ -1,6 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <sys/wait.h>
 
 /**
  * main - a super simple shell
@@ -9,49 +7,33 @@
  */
 int main(void)
 {
-	char **argv;
+	char **cmds, *line;
 	size_t n;
 	ssize_t nread;
-	int status;
+	int status, i, last_return = 0;
 	pid_t child_pid;
-	char *line;
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		_puts("#cisfun$ ");
 		line = NULL;
 		n = 0;
 		nread = getline(&line, &n, stdin);
 		if (nread == -1)
 			continue;
-		/* Check if command exists */
-		child_pid = fork();
-		if (child_pid == -1)
+		line[nread - 1] = '\0';
+		cmds = makeCmds(line);
+		free(line);
+		for (i = 0; cmds[i]; i++)
 		{
-			perror("Error:");
-			return (1);
-		}
-		if (child_pid == 0)
-		{
-
-			if (line[nread - 1] == '\n')
-				line[nread - 1] = '\0';
-			argv = makeCmd(line);
-			if (_strcmp(argv[0], "exit") == 0)
-			{
-				free(line);
-				exit(97);
-			}
-			if (execve(argv[0], argv, NULL) == -1)
-				perror("Error:");
-			free(line);
-		}
-		else
-		{
-			wait(&status);
-			if (WIFEXITED(status))
-				if (WEXITSTATUS(status) == 97)
-					break;
+			/* Check if command exists */
+			child_pid = fork();
+			if (child_pid == -1)
+				return (print_error());
+			if (child_pid == 0)
+				exec(cmds, i);
+			else
+				parent(&status, cmds);
 		}
 	}
 	return (0);
