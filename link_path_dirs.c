@@ -1,5 +1,4 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * link_path_dirs - builds a linked list of
@@ -8,22 +7,27 @@
  *
  * Return; void
  */
-void link_path_dirs(path_t *head)
+void link_path_dirs(path_t **head)
 {
-	char str[1024], *token, *dir;
+	char str[10240], *token, *dir;
 	int i, j, currIndex;
 
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		currIndex = 0;
-		for (j = 0; j < 1024; j++)
+		for (j = 0; j < 10240; j++)
 			str[j] = '\0';
 		for (j = 0; environ[i][j] != '\0'; j++)
 			str[j] = environ[i][j];
+		str[j] = '\0';
 		token = _strtok(str, "=", &currIndex);
 		if (_strcmp(token, "PATH") == 0)
-			while ((dir = _strtok(str, ":", &currIndex)))
-				add_node_end(&head, dir);
+			while (dir = _strtok(str, ":", &currIndex))
+			{
+				add_node_end(head, dir);
+				free(dir);
+			}
+		free(token);
 	}
 }

@@ -16,7 +16,7 @@ char *_strtok(char *s, char *delm, int *currIndex)
 
 	if (!s || !delm || s[*currIndex] == '\0')
 		return (NULL);
-	W = (char *)malloc(sizeof(char) * 1024);
+	W = (char *)malloc(sizeof(char) * 10240);
 	if (W == NULL)
 		return (NULL);
 	i = *currIndex;
@@ -38,7 +38,7 @@ char *_strtok(char *s, char *delm, int *currIndex)
 		k++;
 	}
 It:
-	W[i] = 0;
+	W[k] = 0;
 	*currIndex = i + 1;
 	return (W);
 }

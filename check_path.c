@@ -1,27 +1,58 @@
 #include "main.h"
 
 /**
- * check_path - check if a command exists
+ * cmd_exists - check if a command exists
  * @cmd: the command
- * @builtins
  *
- * Return: a full path of the command, or NULL if not found
+ * Return: a pointer to the full path of the command,
+ * or NULL command not found
  */
-char *check_path(char *cmd, char **builtins)
+char *cmd_exists(char *cmd)
 {
-	path_t *head = NULL, *head_copy;
+	path_t *head, *p;
 	char *temp;
 	struct stat st;
-	int b_found = 1;
+	int i, j, n;
 
-	while (*builtins != NULL)
+	if (stat(cmd, &st) == 0) /* check if absolute path */
+		return (cmd);
+	head = NULL;
+	link_path_dirs(&head);
+	p = head;
+	while (p != NULL)
 	{
-		if (_strcmp(*builtins, command) == 0)
-			return (command);
-		builtins++;
+		n = _strlen(cmd) + _strlen(p->dir) + 2;
+		temp = malloc(sizeof(char) * n);
+		if (temp == NULL)
+			return (NULL);
+		for (i = 0; i < n; i++)
+			temp[i] = '\0';
+		for (i = 0; (p->dir)[i]; i++)
+			temp[i] = (p->dir)[i];
+		temp[i++] = '/';
+		for (j = 0; cmd[j]; i++, j++)
+			temp[i] = cmd[j];
+		if (stat(temp, &st) == 0)
+		{
+			free_list(head);
+			return (temp);
+		}
+		free(temp);
+		p = p->next;
 	}
-	if (stat(command, &st) == 0)
-		return (command);
-	if (head == NULL)
-		
+	free_list(head);
+	return (NULL);
+}
+
+int main()
+{
+	char *cmd;
+
+	cmd = cmd_exists("false");
+	if (cmd != NULL)
+	{
+		printf("It works! Full path: [[%s]]\n", cmd);
+		free(cmd);
+	}
+	return (0);
 }
