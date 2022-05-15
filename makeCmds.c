@@ -24,18 +24,14 @@ int isOpr(char *s)
  */
 int count_commands(char *str)
 {
-	int i = 0, and, or, sc, hash, command_count = 0;
+	int i = 0, command_count = 0;
 
 	while (str[i])
 	{
-		and = isOpr(&(str[i]));
-		or = isOpr(&(str[i]));
-		sc = isOpr(&(str[i]));
-		hash = isOpr(&(str[i]));
-		if (and || or || sc || hash)
+		if (isOpr(&(str[i])))
 		{
 			command_count++;
-			if (and || or || hash)
+			if (str[i] != ';')
 				i++;
 			i++;
 			continue;

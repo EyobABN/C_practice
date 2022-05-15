@@ -31,8 +31,10 @@ int _strcmp(const char *s1, const char *s2);
 char *_strdup(const char *str);
 void _puts(char *str);
 int _strlen(const char *s);
+char *_strtok(char *s, char *delm, int *currIndex);
 
 path_t *add_node_end(path_t **head, char *str);
+void link_path_dirs(path_t *head);
 void free_list(path_t *head);
 
 void *free_array(char **arr, int j);
@@ -45,8 +47,8 @@ int isOpr(char *s);
 char **mkargv(char *str);
 char **makeCmds(char *str);
 
-void exec(char **cmds, int i);
-void parent(int *status, char **cmds);
+void exec(char **cmds, int i, int *last_return);
+void parent(int *status, char **cmds, int *last_return);
 int print_error(void);
 
 #endif /* MAIN_H */

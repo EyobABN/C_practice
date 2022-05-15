@@ -31,9 +31,9 @@ int main(void)
 			if (child_pid == -1)
 				return (print_error());
 			if (child_pid == 0)
-				exec(cmds, i);
+				exec(cmds, i, &last_return);
 			else
-				parent(&status, cmds);
+				parent(&status, cmds, &last_return);
 		}
 	}
 	return (0);
