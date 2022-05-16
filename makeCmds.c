@@ -127,37 +127,3 @@ char **makeCmds(char *str)
 	cmd[j] = NULL;
 	return (cmd);
 }
-
-/**
- * main - tests makeCmds
- *
- * Return: 0 upon success, 1 upon failure
- */
-/*int main(void)
-{
-	int i, j, cc, ac;
-	char **cv, **av;
-	char *str = "echo bbb && ls -l /bin/ls ; true&&";
-
-	cv = makeCmds(str);
-	if (cv == NULL)
-		return (1);
-	cc = count_commands(str);
-	printf("Input:		[[%s]]\n", str);
-	printf("Number of commands:	%d\n", cc);
-	for (i = 0; i < cc; i++)
-	{
-		printf("Command[%d]:	%s\n", i, cv[i]);
-		av = mkargv(cv[i]);
-		if (av == NULL)
-			return (1);
-		ac = 0;
-		for (j = 0; av[j]; j++)
-			ac++;
-		for (j = 0; j < ac; j++)
-			printf("	argv[%d]:	%s\n", j, av[j]);
-		free_array(av, ac);
-	}
-	free_array(cv, cc);
-	return (0);
-}*/

@@ -39,6 +39,8 @@ char **mkargv(char *str)
 
 	if (str == NULL)
 		return (NULL);
+	if (isOpr(str))
+		return (mkOprargv(str));
 	word_count = count_words(str);
 	cmd = malloc(sizeof(char *) * (word_count + 1));
 	if (cmd == NULL)

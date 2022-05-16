@@ -1,21 +1,23 @@
 #include "main.h"
 
 /**
- * fetch_cmd - check if a command exists
+ * cmd_exists - check if a command exists
  * @cmd: the command
  *
- * Return: a pointer to the full path of the command,
- * or NULL command not found
+ * Return: 1 if command if found in PATH, 0 if not found,
+ * -1 upon error
  */
-char *fetch_cmd(char *cmd)
+int cmd_exists(char *cmd)
 {
 	path_t *head, *p;
 	char *temp;
 	struct stat st;
 	int i, j, n;
 
+	if (get_builtin(cmd))	/* check if cmd is a built-in */
+		return (1);
 	if (stat(cmd, &st) == 0) /* check if absolute path */
-		return (cmd);
+		return (1);
 	head = NULL;
 	link_path_dirs(&head);
 	p = head;
@@ -24,7 +26,7 @@ char *fetch_cmd(char *cmd)
 		n = _strlen(cmd) + _strlen(p->dir) + 2;
 		temp = malloc(sizeof(char) * n);
 		if (temp == NULL)
-			return (NULL);
+			return (-1);
 		for (i = 0; i < n; i++)
 			temp[i] = '\0';
 		for (i = 0; (p->dir)[i]; i++)
@@ -35,11 +37,12 @@ char *fetch_cmd(char *cmd)
 		if (stat(temp, &st) == 0)
 		{
 			free_list(head);
-			return (temp);
+			free(temp);
+			return (1);
 		}
 		free(temp);
 		p = p->next;
 	}
 	free_list(head);
-	return (NULL);
+	return (0);
 }
