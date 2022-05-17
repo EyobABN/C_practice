@@ -3,17 +3,14 @@
 /**
  * exec - executes a command
  * @argv: the command's argument vector
- * @cmds: the commands
  * @last_return: the exit code of the last process
  *
  * Return: void
  */
-void exec(char **argv, char **cmds, int *last_return)
+void exec(char **argv, int *last_return)
 {
 	char *temp;
 
-	if (get_builtin(argv[0]))
-		exec_builtin(argv[0], argv, cmds, last_return);
 	if (isOpr(argv[0]))
 	{
 		if (_strcmp(argv[0], "||") == 0)

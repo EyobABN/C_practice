@@ -10,13 +10,22 @@
  */
 void exitHandler(char **argv, char **cmds, int *last_return)
 {
+	int status;
+
 	if (*last_return != 0)
-		exit(*last_return);
+		return;
 	if (argv[1] == NULL)
+	{
+		free_entire_arr(argv);
+		free_entire_arr(cmds);
 		exit(0);
+	}
 	if (is_number(argv[1]))
-		exit(_atoi(argv[1]));
-	/* will never execute after this line. Betty workaround */
-	free_entire_arr(argv);
-	free_entire_arr(cmds);
+	{
+		status = _atoi(argv[1]);
+		free_entire_arr(argv);
+		free_entire_arr(cmds);
+		exit(status);
+	}
+	perror("exit: Illegal number");
 }

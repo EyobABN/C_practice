@@ -11,6 +11,8 @@ void (*get_builtin(char *s))(char **argv, char **cmds, int *last_return)
 	builtin_t builtins[] = {
 		{"exit", exitHandler},
 		{"env", envHandler},
+		{"setenv", setenvHandler},
+		{"unsetenv", unsetenvHandler},
 		{NULL, NULL}
 	};
 	int i = 0;

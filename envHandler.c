@@ -2,24 +2,23 @@
 
 /**
  * envHandler - handle the env built-in
- * @argv: the argument vector
+ * @av: the argument vector
  * @cmds: the commands
- * @last_return: the exit code of the last process
+ * @last_ret: the exit code of the last process
  *
  * Return: always 0
  */
-void envHandler(char **argv, char **cmds, int *last_return)
+void envHandler(char **av, char __attribute__((unused)) **cmds, int *last_ret)
 {
 	int i, status;
 
-	status = *last_return;
+	status = *last_ret;
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		_puts(environ[i]);
 		_putchar('\n');
 	}
 	status = 0;
-	free_entire_arr(argv);
-	free_entire_arr(cmds);
-	exit(status);
+	free_entire_arr(av);
+	*last_ret = status;
 }
