@@ -1,7 +1,5 @@
 #include "main.h"
 
-#define BUFSZ 1024
-
 /**
  * readline - reads one line at a time from file
  * @buf: the buffer for storing the line
@@ -16,7 +14,7 @@ ssize_t readline(char *buf, size_t sz, char *fn, off_t *offset)
 	int fd;
 	ssize_t nchr = 0;
 	ssize_t idx = 0;
-	char *p = NULL;
+	char *p = NULL, *temp;
 
 	fd = open(fn, O_RDONLY);
 	if (fd == -1)
@@ -25,24 +23,23 @@ ssize_t readline(char *buf, size_t sz, char *fn, off_t *offset)
 		return (-1);
 	}
 	/* position fd & read line */
-	nchr = lseek(fd, *offset, SEEK_SET);
-	if (nchr != -1)
-		nchr = read(fd, buf, sz);
-	close(fd);
+	temp = malloc(sizeof(char) * (*offset));
+	if (temp == NULL)
+		return (-1);
+	nchr = read(fd, temp, *offset);
+	free(temp);
 	if (nchr == -1)
-	{   /* read error   */
-		perror("Error: Couldn't read file");
+		return (-1);
+	nchr = read(fd, buf, sz);
+	close(fd);
+	if (nchr == -1)	/* read error   */
 		return (nchr);
-	}
 	/* end of file - no chars read (not an error, but return -1)*/
 	if (nchr == 0)
 		return (-1);
-	p = buf;    /* check each chacr */
+	p = buf;    /* check each char */
 	while (idx < nchr && *p != '\n')
-	{
-		p++;
-		idx++;
-	}
+		p++, idx++;
 	*p = 0;
 	if (idx == nchr)
 	{  /* newline not found  */
@@ -65,7 +62,7 @@ void exec_file(int ac, char **av)
 	char **cmds, line[BUFSZ] = {0};
 	ssize_t nread = 0;
 	off_t offset = 0;
-
+	int i;
 
 	if (ac != 2)
 	{
@@ -82,6 +79,8 @@ void exec_file(int ac, char **av)
 		}
 		exec_cmds(cmds);
 		free_entire_arr(cmds);
+		for (i = 0; i < BUFSZ; i++)
+			line[i] = '\0';
 	}
 	exit(EXIT_SUCCESS);
 }

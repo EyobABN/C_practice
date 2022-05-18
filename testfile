@@ -1,0 +1,3 @@
+ls -l shell1.c
+
+echo foo && echo bar

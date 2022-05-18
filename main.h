@@ -5,13 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-extern char **environ;
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+
+extern char **environ;
+
+#define BUFSZ 1024
 
 /**
  * struct path_s - a struct of a directory in path
@@ -68,12 +70,17 @@ char **mkargv(char *str);
 char **mkOprargv(char *str);
 char **makeCmds(char *str);
 
-char **input(int *last_return);
-void exec(char **argv, char **cmds, int *last_return);
-void parent(int *status, char **cmds, char **argv, int *last_return);
+void exec_file(int ac, char **av);
+char **get_input(void);
+ssize_t _getline(char *buf, size_t sz);
+void exec_cmds(char **cmds);
+void exec(char **argv, int *last_return);
+void parent(int *status, char **argv, int *last_return);
 int print_error(void);
 
 void exitHandler(char **argv, char **cmds, int *last_return);
 void envHandler(char **argv, char **cmds, int *last_return);
+void setenvHandler(char **argv, char **cmds, int *last_return);
+void unsetenvHandler(char **argv, char **cmds, int *last_return);
 
 #endif /* MAIN_H */

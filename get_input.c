@@ -7,24 +7,18 @@
  */
 char **get_input(void)
 {
-	char *line, **cmds;
-	size_t n;
-	ssize_t nread;
+	char **cmds, line[BUFSZ] = {0};
+	ssize_t nread = 0;
 
 	_puts("#cisfun$ ");
-	line = NULL;
-	n = 0;
-	nread = getline(&line, &n, stdin);
+	nread = _getline(line, BUFSZ);
 	if (nread == -1)
 		exit(0);	/* EOF (Ctrl+D) captured */
-	line[nread - 1] = '\0';
 	cmds = makeCmds(line);
 	if (cmds == NULL)
 	{
 		perror("Error: failed to create commands");
-		free(line);
 		get_input();
 	}
-	free(line);
 	return (cmds);
 }
